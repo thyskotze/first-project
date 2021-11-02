@@ -1,7 +1,8 @@
-#https://geekflare.com/tic-tac-toe-python-code/
-
 import random
+
+
 class TicTacToe:
+
     def __init__(self):
         self.board = []
 
@@ -13,7 +14,7 @@ class TicTacToe:
             self.board.append(row)
 
     def get_random_first_player(self):
-        return random.randint(0,1)
+        return random.randint(0, 1)
 
     def fix_spot(self, row, col, player):
         self.board[row][col] = player
@@ -23,7 +24,7 @@ class TicTacToe:
 
         n = len(self.board)
 
-        #checking rows
+        # checking rows
         for i in range(n):
             win = True
             for j in range(n):
@@ -32,17 +33,18 @@ class TicTacToe:
                     break
             if win:
                 return win
-        #checking columns
+
+        # checking columns
         for i in range(n):
             win = True
             for j in range(n):
-                if self.board[j][1] != player:
+                if self.board[j][i] != player:
                     win = False
                     break
             if win:
                 return win
 
-        #checking diagonals
+        # checking diagonals
         win = True
         for i in range(n):
             if self.board[i][i] != player:
@@ -53,7 +55,7 @@ class TicTacToe:
 
         win = True
         for i in range(n):
-            if self.board[i][n-1-i] != player:
+            if self.board[i][n - 1 - i] != player:
                 win = False
                 break
         if win:
@@ -66,7 +68,6 @@ class TicTacToe:
                     return False
         return True
 
-    @property
     def is_board_filled(self):
         for row in self.board:
             for item in row:
@@ -75,7 +76,7 @@ class TicTacToe:
         return True
 
     def swap_player_turn(self, player):
-        return 'X' if player == 'O' else 'o'
+        return 'X' if player == 'O' else 'O'
 
     def show_board(self):
         for row in self.board:
@@ -86,37 +87,38 @@ class TicTacToe:
     def start(self):
         self.create_board()
 
-        player = "X" if self.get_random_first_player() == 1 else 'O'
+        player = 'X' if self.get_random_first_player() == 1 else 'O'
         while True:
             print(f"Player {player} turn")
 
             self.show_board()
 
-            #taking player input
+            # taking user input
             row, col = list(
-                map(int, input("Enter row and column number to fix spot").split()))
+                map(int, input("Enter row and column numbers to fix spot: ").split()))
             print()
 
-            #fix the spot
-            self.fix_spot(row -1, col -1, player)
+            # fixing the spot
+            self.fix_spot(row - 1, col - 1, player)
 
-            #checking whether the current player has won or not
+            # checking whether current player is won or not
             if self.is_player_win(player):
                 print(f"Player {player} wins the game!")
                 break
 
-            #checking wheter the game is a draw or not
-            if self.is_board_filled:
-                print("Match Draw")
+            # checking whether the game is draw or not
+            if self.is_board_filled():
+                print("Match Draw!")
                 break
 
-            #swap the players
+            # swapping the turn
             player = self.swap_player_turn(player)
 
-        #show the final view of the board
+        # showing the final view of board
         print()
         self.show_board()
 
-#starting the game
+
+# starting the game
 tic_tac_toe = TicTacToe()
 tic_tac_toe.start()
